@@ -1,24 +1,34 @@
 
+import { DeleteAlert } from '@/components/DeleteAlert';
 import { EditModal } from '@/components/EditModal';
 import { Button } from '@heroui/react';
 import Image from 'next/image';
 import React from 'react';
 import { FaRegCalendar } from 'react-icons/fa';
 import { LuMapPin } from 'react-icons/lu';
+import { notFound } from 'next/navigation';
 
 const DestinationDetailsPage = async ({params}) => {
-    const { id } =await params;
+    const { id } = await params;
     const res = await fetch(`http://localhost:5000/destination/${id}`);
-    const destination = await res.json();
-    console.log(destination)
+    if (!res.ok) {
+        return notFound();
+    }
 
+    const destination = await res.json();
+    if (!destination) {
+        return notFound();
+    }
 
     const { imageUrl, destinationName, price, duration, country, description } = destination;
 
     console.log(id)
     return (
         <div className='max-w-7xl mx-auto mt-10'>
-            <EditModal destination={destination} />
+            <div className='flex justify-end gap-2 items-center'>
+                <EditModal destination={destination} />
+            <DeleteAlert destination={destination}/>
+            </div>
             <Image className='w-full h-100 object-cover' src={imageUrl} alt={destinationName} width={800} height={500} />
 
             <div className="flex gap-2 items-center">

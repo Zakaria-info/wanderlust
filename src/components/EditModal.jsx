@@ -34,14 +34,14 @@ export function EditModal({destination}) {
   };
   return (
     <Modal>
-      <div className="flex justify-end">
+      
         <Button
           variant="Outline"
           className={"bg-blue-500 my-3 rounded-lg text-white"}
         >
           Edit
         </Button>
-      </div>
+      
       <Modal.Backdrop>
         <Modal.Container placement="auto">
           <Modal.Dialog className="sm:max-w-xl">
